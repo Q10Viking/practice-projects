@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="test">
+	<!-- 给这个SQL语句起一个名  -->
+	<!--  parameterType属性可以省略  -->
+	<insert id="insertStudent" parameterType="Student">
+		INSERT INTO student(name,age,score) VALUES(#{name},#{age},#{score})
+	</insert>
+</mapper>
