@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="test">
+	<!-- 给这个SQL语句起一个名  -->
+	<!--  parameterType属性可以省略  -->
+	<insert id="insertStudent" parameterType="Student">
+		INSERT INTO student(name,age,score) VALUES(#{name},#{age},#{score}) 
+	</insert>
+	
+	<insert id="insertStudentCatchId">
+		INSERT INTO student(name,age,score) VALUES(#{name},#{age},#{score})
+		<selectKey resultType="int" keyProperty="id">
+			SELECT @@IDENTITY
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteStudentById">
+		DELETE FROM student WHERE id=#{id}  <!-- 后面的id仅仅是占位符  -->
+	</delete>
+	
+	<update id="updateStudent">
+		<!-- 这里的代表的Student对象的属性 -->
+		UPDATE student SET name=#{name},age=#{age},score=#{score} WHERE id=#{id}
+	</update>
+	
+	<!-- 注意数据的封装 -->
+	<select id="selectAllStudents" resultType="Student"> 
+		SELECT id,name,age,score FROM student
+	</select>
+	
+	
+	<select id="selectStudentById" resultType="Student">
+		SELECT id,name,age,score FROM student where id=#{id} <!-- 占位符 -->
+	</select>
+	
+	<select id="selectStudentsByName" resultType="Student">
+		SELECT id,name,age,score FROM student where name like '%' #{name} '%' <!-- 占位符 -->
+	</select>
+	
+</mapper>
