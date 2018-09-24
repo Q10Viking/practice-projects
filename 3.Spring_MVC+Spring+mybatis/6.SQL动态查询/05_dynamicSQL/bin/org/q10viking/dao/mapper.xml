@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="org.q10viking.dao.IStudentDao">
+
+	<resultMap type="Student" id="studentMap">
+		<id column="tid" property="id" />
+		<result column="tname" property="name"/>
+		<result column="tage" property="age" />
+	</resultMap>
+	
+	<select id="selectStudentsByIf" resultMap="studentMap">
+		SELECT tid,tname,tage,score 
+		FROM student
+		WHERE 1=1
+		<if test="name != null and name != ''">
+			AND tname LIKE '%' #{name} '%' 
+		</if>
+		<if test="age > 0">
+			AND tage > #{age}
+		</if>
+	</select>
+	
+	
+	<select id="selectStudentsWhere" resultMap="studentMap">
+		SELECT tid,tname,tage,score 
+		FROM student
+		<where>
+			<if test="name != null and name != ''">
+				AND tname LIKE '%' #{name} '%' 
+			</if>
+			<if test="age > 0">
+				AND tage > #{age}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="selectStudentsChoose" resultMap="studentMap">
+		SELECT tid,tname,tage,score 
+		FROM student
+		<where>
+			<choose>
+				<when test="name != null and name != ''">
+					AND tname LIKE '%' #{name} '%'				
+				</when>
+				<when test="age > 0">
+					AND tage > #{age}
+				</when>
+				<otherwise>
+					FALSE
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+	
+	
+	
+	<select id="selectStudentsForeach" resultMap="studentMap">
+		SELECT tid,tname,tage,score 
+		FROM student
+		<if test="array.length > 0">
+			where tid in
+			<foreach collection="array" item="id" open="(" close=")" separator=",">
+				#{id}			
+			</foreach>
+		</if>
+	</select>
+	
+	
+	<select id="selectStudentsForeach2" resultMap="studentMap">
+		SELECT tid,tname,tage,score 
+		FROM student
+		<if test="list.size > 0">
+			where tid in
+			<foreach collection="list" item="id" open="(" close=")" separator=",">
+				#{id}			
+			</foreach>
+		</if>
+	</select>
+	
+	
+	<select id="selectStudentsForeach3" resultMap="studentMap">
+		SELECT <include refid="selectColumns" />
+		FROM student
+		<if test="list.size > 0">
+			where tid in
+			<foreach collection="list" item="stu" open="(" close=")" separator=",">
+				<!-- 对象属性 -->
+				#{stu.id}			
+			</foreach>
+		</if>
+	</select>
+	
+	
+	<sql id="selectColumns">
+		tid,tname,tage,score 
+	</sql>
+	
+
+</mapper>
