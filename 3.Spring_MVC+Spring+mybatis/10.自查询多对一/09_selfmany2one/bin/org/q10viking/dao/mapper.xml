@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="org.q10viking.dao.INewsLabelDao">
+
+
+	<resultMap type="NewsLabel" id="NewsLabelMapper">
+		<id column="id" property="id"/>
+		<result column="name" property="name" />
+		<association property="parent" 
+					javaType="NewsLabel"
+					select="selectParentByParentId"
+					column="pid"/>
+		
+	</resultMap>
+	<select id="selectParentByParentId" resultMap="NewsLabelMapper">
+		<!-- 必须将pid查询出来，用于递归查询，虽然pid不封装到类的属性 -->
+		SELECT id,name,pid
+		FROM Newslabel
+		WHERE id=#{pid}
+	</select>
+	
+</mapper>
