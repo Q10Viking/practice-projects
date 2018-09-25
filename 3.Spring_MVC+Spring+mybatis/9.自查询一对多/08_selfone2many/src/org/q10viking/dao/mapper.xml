@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="org.q10viking.dao.INewsLabelDao">
+
+<!-- 给定pid查询出其所有子孙栏目 -->
+<!-- 	<resultMap type="NewsLabel" id="NewslabelMapper">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="children"
+					ofType="NewsLabel"
+					select="selectChildrenByParentId"
+					column="id" />
+		
+	</resultMap>
+	<select id="selectChildrenByParentId" resultMap="NewslabelMapper">
+		SELECT id,name
+		FROM Newslabel
+		WHERE pid=#{pid}
+	</select> -->
+	
+	
+	<resultMap type="NewsLabel" id="NewslabelMapper">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="children"
+					ofType="NewsLabel"
+					select="selectChildrenByParentId"
+					column="id" />
+		
+	</resultMap>
+	
+	<select id="selectChildrenByParentId" resultMap="NewslabelMapper">
+		SELECT id,name
+		FROM Newslabel
+		WHERE pid=#{id}
+	</select>
+	
+	<select id="selectNewsLabelById" resultMap="NewslabelMapper">
+		SELECT id,name
+		FROM Newslabel
+		WHERE id=#{id}
+	</select>
+	
+	
+</mapper>
