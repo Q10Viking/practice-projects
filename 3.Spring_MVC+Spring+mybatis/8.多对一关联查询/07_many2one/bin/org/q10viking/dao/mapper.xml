@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="org.q10viking.dao.MinisterDao">
+
+<!-- 多表连接查询 -->
+<!-- 	<resultMap id="ministerMapper" type="Minister">
+		<id column="mid" property="mid"/>
+		<result column="mname" property="mname"/>
+		<association property="country" javaType="Country" >
+			<id column="cid" property="cid"/>
+			<result column="cname" property="cname" />
+		</association>
+	</resultMap>
+	
+	
+	<select id="selectMinisterByMid" resultMap="ministerMapper">
+		SELECT mid,mname,cid,cname
+		FROM minister,country
+		WHERE countryId=cid and mid=#{mid}
+	</select> -->
+
+
+<!-- 多表单独查询 -->
+
+	<select id="selectCountryById" resultType="Country">
+		SELECT cid,cname
+		FROM country
+		WHERE cid=#{ooo}
+	</select>
+
+	<resultMap id="ministerMapper" type="Minister">
+		<id column="mid" property="mid"/>
+		<result column="mname" property="mname"/>
+		<association property="country" 
+					 javaType="Country" 
+					 select="selectCountryById"
+					 column="countryId"/>
+	</resultMap> 
+	
+	
+	<select id="selectMinisterByMid" resultMap="ministerMapper">
+		SELECT mid,mname,countryId
+		FROM minister
+		WHERE mid=#{mid}
+	</select>
+</mapper>
