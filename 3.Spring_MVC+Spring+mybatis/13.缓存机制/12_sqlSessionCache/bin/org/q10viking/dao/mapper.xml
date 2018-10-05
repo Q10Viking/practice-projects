@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="org.q10viking.dao.IStudentDao">
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache">
+		<property name="maxElementsInMemory" value="5000"/>
+		<property name="timeToIdleSeconds" value="240" />
+	</cache>
+	
+	<select id="selectStudentById" resultType="Student">
+		SELECT tid id,tname name ,tage age,score 
+		FROM student
+		WHERE tid = #{id}
+	</select>
+	
+	<insert id="insertStudent">
+		INSERT INTO student(tname,tage,score)
+		VALUES(#{name},#{age},#{score})
+	</insert>
+	
+	<update id="updateStudent">
+		UPDATE student SET score = #{score} 
+		WHERE tid = #{id}
+	</update>
+
+</mapper>
