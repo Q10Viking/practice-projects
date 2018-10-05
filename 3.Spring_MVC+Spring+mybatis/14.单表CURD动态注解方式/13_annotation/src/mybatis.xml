@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <configuration>
+	<!-- 注册DB连接四要素 -->
+  	<properties resource="jdbc_mysql.properties" />
+  	<!-- 定义类型别名 -->
+  	<typeAliases>
+  		<!-- <typeAlias type="org.q10viking.beans.Student" alias="Student"/> -->
+  		<package name="org.q10viking.beans"/>
+  	</typeAliases> 	
+  	<!-- 配置运行环境 -->
+  	<environments default="onlineEM"> <!-- 默认的运行环境 -->
+  		<!-- 上线的环境 -->
+  		<environment id="onlineEM">
+  			<!-- JDBC事物管理 -->
+  			<transactionManager type="JDBC" />
+  			<dataSource type="POOLED">
+  				<property name="driver" value="${jdbc.driver}"/>
+  				<property name="url" value="${jdbc.url}"/>
+  				<property name="username" value="${jdbc.user}"/>
+  				<property name="password" value="${jdbc.password}"/>
+  			</dataSource>
+  		</environment>
+  		
+  		<!-- 测试用的环境 -->
+  	</environments>
+  	
+  	<!-- 注册映射文件 -->
+  	<mappers>
+  		<package name="org.q10viking.dao"/>
+  	</mappers>	
+</configuration>
