@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+
+	<bean id="school1" class="org.q10viking.di05.School">
+		<property name="name" value="CAU" />
+	</bean>
+  
+  	<bean id="school2" class="org.q10viking.di05.School">
+		<property name="name" value="中国农业大学" />
+	</bean>
+	
+	 <bean id="myCollections" class="org.q10viking.di05.MyCollections">
+		<property name="schools">
+			<array>
+				<ref bean="school1"/>
+				<ref bean="school2"/>
+			</array>
+		</property>
+		
+		<property name="strs">
+			<array>
+				<value>Q10Viking</value>
+				<value>Hello</value>
+			</array>
+		</property>	
+		
+		<property name="myList">
+			<list>
+				<ref bean="school1"/>
+				<ref bean="school2"/>
+			</list>
+		</property>
+		
+		<property name="mySet">
+			<set>
+				<value>CHINA</value>
+				<value>JAPAN</value>
+			</set>
+		</property>
+		
+		
+		<property name="myMap">
+			<map>
+				<entry key="id" value="001"/>
+				<entry key="phone" value="0773"/>
+			</map>
+		</property>
+		
+		<property name="myPro">
+			<props>
+				<prop key="tel">17801054490</prop>	
+				<prop key="address">CHINA AGRICULTURAL UNIVERSITY</prop>
+			</props>
+		</property>
+	 </bean>
+	 
+</beans>

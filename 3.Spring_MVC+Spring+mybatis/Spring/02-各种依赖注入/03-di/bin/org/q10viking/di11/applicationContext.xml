@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+
+	<bean id="base" abstract="true">
+		<property name="school" value="CAU"/>
+		<property name="department" value="CIEE" />
+	</bean>
+	
+	<bean id="student" class="org.q10viking.di11.Student" parent="base">
+		<property name="name" value="Q10Viking"/>
+		<property name="age"  value="23" />
+	</bean>
+	
+	<bean id="teacher" class="org.q10viking.di11.Teacher" parent="base">
+		<property name="name" value="Jack"/>
+		<property name="workAge"  value="22" />
+	</bean>
+	 
+</beans>

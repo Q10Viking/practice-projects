@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+	<!-- 注册person -->
+	<bean id="person" class="org.q10viking.di08.Person">
+		<property name="pname" value="Q10Viking" />
+		<property name="page" value="#{T(java.lang.Math).random()*50}" />
+	</bean>
+	<!-- 注册student -->
+	<bean id="student" class="org.q10viking.di08.Student">
+		<property name="sname" value="#{person.pname}" />
+		<!-- <property name="sage" value="#{person.page > 25 ? 25: person.page}" /> -->
+		<property name="sage" value="#{person.computeAge()}" />
+	</bean>
+</beans>
