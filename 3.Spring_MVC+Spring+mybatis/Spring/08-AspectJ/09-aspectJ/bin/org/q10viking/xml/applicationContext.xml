@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd"> 
+        
+      <!--   注册目标代码 -->
+      <bean id="myService" class="org.q10viking.xml.SomeServiceImp"/>
+      
+      <!-- 注册切面 -->
+      <bean id="myAspect" class="org.q10viking.xml.MyAspect"/>
+      
+      <aop:config>
+      	<!-- 定义切入点 -->
+      	<aop:pointcut expression="execution(* *..ISomeService.doFirst(..))" id="doFirstPointcut"/>
+      	<aop:pointcut expression="execution(* *..ISomeService.doSecond(..))" id="doSecondPointcut"/>
+      	<aop:pointcut expression="execution(* *..ISomeService.doThird(..))" id="doThirdPointcut"/>
+      	<aop:aspect ref="myAspect">
+      		<!-- 前置通知 -->
+      		<aop:before method="myBefore" pointcut-ref="doFirstPointcut"/>
+      		<!-- 参数要指定全限定性类名 -->
+      		<aop:before method="myBeforeOther(org.aspectj.lang.JoinPoint)" pointcut-ref="doFirstPointcut"/>
+      		
+      		<!-- 后置通知 -->
+      		<aop:after-returning method="myAfterReturning" pointcut-ref="doSecondPointcut"/>
+      		<!-- returning 指定参数的名称 -->
+      		<aop:after-returning method="myAfterReturning(java.lang.Object)" 
+      							 pointcut-ref="doSecondPointcut" returning="result"/>
+      		
+      		<!-- 环绕通知就唯一个参数，可以不用指定，默认会带有 -->
+      		<aop:around method="myAround" pointcut-ref="doSecondPointcut"/>
+      		
+      		<!-- 异常通知 -->
+			<aop:after-throwing method="myThrowing(java.lang.Throwable)" pointcut-ref="doThirdPointcut" throwing="ex"/>      		
+      		
+      		<!-- 最终通知 -->
+      		<aop:after method="myAfter" pointcut-ref="doThirdPointcut"/>
+      	</aop:aspect>
+      
+      </aop:config>
+</beans>
