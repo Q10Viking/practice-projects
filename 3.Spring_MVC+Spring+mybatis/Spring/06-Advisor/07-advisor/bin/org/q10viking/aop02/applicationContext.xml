@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+
+	<!-- 注册目标类 -->
+	<bean id="studentServiceTarget" class="org.q10viking.aop02.UserServiceImp" />
+	<!-- 注册切面，前置通知类  -->
+	<bean id="myMethodBeforeAdvice" class="org.q10viking.aop02.MyMethodBeforeAdvice" />
+	
+	<!-- 注册切面顾问 -->
+	<bean id="myAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<!-- 顾问包装了通知 -->
+		<property name="advice" ref="myMethodBeforeAdvice" />
+		<!-- 匹配的是全限定性方法名 -->
+		<property name="pattern" value=".*First|.*Second"/>
+	</bean>
+	
+	<!-- 配置代理 -->
+	<bean id="studentServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="studentServiceTarget"/>
+		<property name="interceptorNames" value="myAdvisor" />
+	</bean>
+</beans>
