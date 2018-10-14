@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"> 
+  
+  
+  	<!-- 注册DataSource为JdbcTemplate做数据支持 -->
+  	<!-- Spring默认的数据源DriverManagerDataSource -->
+<!--   	
+  	<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+  		<property name="url" value="jdbc:mysql://localhost:3306/test?serverTimezone=GMT&amp;useSSL=true" />
+  		<property name="username" value="root" />
+  		<property name="password" value="root" />
+  	</bean>
+   -->
+   <!-- 注册DataSource为JdbcTemplate做数据支持 -->
+     <!-- DBCP 数据源 BasicDataSource -->
+<!--      
+     <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+  		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+  		<property name="url" value="jdbc:mysql://localhost:3306/test?serverTimezone=GMT&amp;useSSL=true" />
+  		<property name="username" value="root" />
+  		<property name="password" value="root" />
+  	</bean>
+    -->
+    
+    
+
+    
+    
+    <!-- 注册DataSource为JdbcTemplate做数据支持 -->
+    <!-- C3P0 数据源 ComboPooledDataSource -->
+<!--     
+    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+  		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+  		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test?serverTimezone=GMT&amp;useSSL=true" />
+  		<property name="user" value="root" />
+  		<property name="password" value="root" />
+  	</bean>
+    --> 
+     
+    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+  		<property name="driverClass" value="${jdbc.driver}"/>
+  		<property name="jdbcUrl" value="${jdbc.url}" />
+  		<property name="user" value="${jdbc.username}" />
+  		<property name="password" value="${jdbc.password}" />
+  	</bean>
+
+     
+    <!-- 注册属性文件 -->
+    <!-- 方式一 -->
+    <!-- 
+    <bean class="org.springframework.beans.factory.config.PlaceholderConfigurerSupport" >
+    	<property name="location" value="classpath:jdbc.properties" />
+    </bean>
+     -->
+     <!-- 方式二 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+    
+    
+<!--     
+  	注册JdbcTemplate为StudentDao使用
+  	<bean id="myJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+  		<property name="dataSource" ref="myDataSource"/>
+  	</bean>
+  	
+  	注册StudentDao
+  	<bean id="studentDao" class="org.q10viking.dao.StudentDaoImp">
+  		设置jdbcTemplate
+  		<property name="jdbcTemplate" ref="myJdbcTemplate"/>
+  	</bean>
+  	  -->
+  	  
+  	 <!--   	注册StudentDao -->
+  	<bean id="studentDao" class="org.q10viking.dao.StudentDaoImp">
+  		<!-- 设置jdbcTemplate -->
+  		<property name="dataSource" ref="myDataSource"/>
+  	</bean>
+  	 
+  	 
+	<!-- 注册学生服务,依赖注入IStudentDao属性 -->
+	<bean id="studentService" class="org.q10viking.service.StudentServiceImp">
+		<property name="dao" ref="studentDao" />
+	</bean>
+	
+	 
+	 
+</beans>
