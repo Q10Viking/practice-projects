@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+ <configuration>
+ 	<typeAliases>
+ 		<package name="org.q10viking.beans"/>
+ 	</typeAliases>
+ 	
+ 	<mappers>
+	<!--  		<mapper resource="org/q10viking/dao/mapper.xml"/> -->
+ 		<package name="org.q10viking.dao"/>
+ 	</mappers>
+ </configuration> 
